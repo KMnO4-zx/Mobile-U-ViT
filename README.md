@@ -12,11 +12,6 @@ Specifically, we redesign the patch embedding part, cascaded decoder with downsa
 
 ### Mobile U-ViT:
 
-![framework](imgs/Mobile_U-ViT.png)
-
-## Performance Comparison
-
-<img src="imgs/better.png" title="preformance" style="zoom:12%;" align="left"/>
 
 ## Datasets
 
