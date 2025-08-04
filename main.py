@@ -15,7 +15,7 @@ from utils.util import AverageMeter
 import utils.losses as losses
 from utils.metrics import iou_score
 
-from network.MobileUVit import mobileuvit, mobileuvit_l
+from network.MobileUViT import mobileuvit, mobileuvit_l
 
 
 def seed_torch(seed):
