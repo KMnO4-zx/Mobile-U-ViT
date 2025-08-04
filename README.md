@@ -1,23 +1,82 @@
 # Mobile U-ViT: Revisiting large kernel \& U-shaped ViT for efficient medical image segmentation
 
-
-
-Official pytorch code for "Mobile U-ViT: Revisiting large kernel \& U-shaped ViT for efficient medical image segmentation"
+![Teaser](imgs/teaser.jpg)
 
 
 
-## Introduction
-In practical clinical scenarios, the need for prompt execution of medical image analysis tasks on mobile devices with limited resources is evident. However, existing prevailing mobile models originally designed for natural images, exhibit suboptimal performance on medical tasks.  How to combine the mobile models and medical models to build a light-weight, universal, and low-latency network for mobile medical devices remains a challenge. Towards this end, we propose a mobile medical image segmentor termed \textbf{Mobile} \textbf{U-}shaped \textbf{V}ision \textbf{T}ransformer (Mobile U-ViT), a mobile-friendly hybrid architecture that synergizes large-kernel CNNs and U-shaped Vision Transformers (ViTs). 
-Specifically, we redesign the patch embedding part, cascaded decoder with downsampled skip-connections to achieve larger receptive fields while minimizing parameters. Furthermore, a Large-kernel Local-Global-Local block with a large kernel is introduced to facilitate the efficient local-to-global information exchange. Extensive experiments on six public medical image datasets with three different modalities demonstrate the superiority of Mobile U-ViT over state-of-the-art methods while boasting lighter weights and a lower computational cost.
+<div align="center">
+    <span class="author-block">
+    <a href="https://scholar.google.com/citations?user=x1pODsMAAAAJ&hl=en" target="_blank">Fenghe Tang</a><sup>1,2</sup>,</span>
+    <span class="author-block">
+    <a target="_blank">Bingkun Nian</a><sup>3</sup>,</span>
+    <span class="author-block">
+    <a href="https://scholar.google.com/citations?user=4TsvOR8AAAAJ&hl=en" target="_blank">Jianrui Ding</a><sup>4</sup>,</span>
+    <span class="author-block">
+    <a href="https://scholar.google.com/citations?user=r0-tZ8cAAAAJ&hl=en" target="_blank">Wenxin Ma</a><sup>1,2</sup>,</span>
+    <span class="author-block">
+    <a href="https://scholar.google.com/citations?user=mlTXS0YAAAAJ&hl=en" target="_blank">Quan Quan</a><sup>5</sup>,</span>
+    <br>
+    <span class="author-block">
+    <a target="_blank">Chengqi Dong</a><sup>1,2</sup>,</span>
+    <span class="author-block">
+    <a href="https://scholar.google.com/citations?user=tmx7tu8AAAAJ&hl=en" target="_blank">Jie Yang</a><sup>3</sup>,</span>
+    <span class="author-block">
+    <a href="https://scholar.google.com/citations?user=Vbb5EGIAAAAJ&hl=en" target="_blank"> Liu Wei</a><sup>3</sup>,</span>
+    <span class="author-block">
+    <a href="https://scholar.google.com/citations?user=8eNm2GMAAAAJ&hl=en" target="_blank">S.Kevin Zhou</a><sup>1,2</sup>
+    </span>
+</div>
 
-### Mobile U-ViT:
+<div align="center">
+    <sup>1</sup>
+    <a href='https://en.ustc.edu.cn/' target='_blank'>School of Biomedical Engineering, University of Science and Technology of China</a>&emsp;
+    <br>
+    <sup>2</sup> <a href='http://english.ict.cas.cn/' target='_blank'>Suzhou Institute for Advanced Research, University of Science and Technology of China</a>&emsp;
+    <br>
+    <sup>3</sup> <a href='http://www.pami.sjtu.edu.cn/En/Home' target='_blank'>School of Automation and Intelligent Sensing, Shanghai Jiao Tong University</a>
+    <br>
+    <sup>4</sup> <a href='https://en.hit.edu.cn/' target='_blank'>School of Computer Science and Technology, Harbin Institute of Technology</a>
+    <br>
+    <sup>5</sup> <a>State Grid Hunan ElectricPower Corporation Limited Research Institute</a>
+</div>
+<br>
+
+   [![arXiv](https://img.shields.io/badge/arxiv-2408.08070-b31b1b)](https://arxiv.org/pdf/2408.08070.pdf)   [![github](https://img.shields.io/badge/github-MobileUViT-black)](https://github.com/FengheTan9/Mobile-U-ViT)    <a href="#LICENSE--citation"><img alt="License: Apache2.0" src="https://img.shields.io/badge/LICENSE-Apache%202.0-blue.svg"/></a>
 
 
-## Datasets
+
+## News
+
+- **Mobile U-ViT accepted by ACM MM'25 🥰** 
+- **Code and code released !** 😘
+
+### Abstract
+
+In clinical practice, medical image analysis often requires efficient execution on resource-constrained mobile devices. However, exist ing mobile models—primarily optimized for natural images—tend to perform poorly on medical tasks due to the significant information density gap between natural and medical domains. Combining com putational efficiency with medical imaging-specific architectural advantages remains a challenge when developing lightweight, uni versal, and high-performing networks. To address this, we propose a mobile model called Mobile U-shaped Vision Transformer (Mobile U-ViT) tailored for medical image segmentation. Specifically, we employ the newly purposed ConvUtr as a hierarchical patch embedding, featuring a parameter-efficient large-kernel CNN with inverted bottleneck fusion. This design exhibits transformer-like representation learning capacity while being lighter and faster. To enable efficient local-global information exchange, we introduce a novel Large-kernel Local-Global-Local (LGL) block that effectively balances the low information density and high-level semantic dis crepancy of medical images. Finally, we incorporate a shallow and lightweight transformer bottleneck for long-range modeling and employ a cascaded decoder with downsample skip connections for dense prediction. Despite its reduced computational demands, our medical-optimized architecture achieves state-of-the-art per formance across eight public 2D and 3D datasets covering diverse imaging modalities, including zero-shot testing on four unseen datasets. These results establish it as an efficient yet powerful and generalization solution for mobile medical image analysis.
+
+![Teaser](imgs/network.jpg)
+
+### Results:
+
+![Teaser](imgs/compare.jpg)
+
+![Teaser](imgs/analysis.jpg)
+
+# Quick Start
+
+#### 1. Environment
+
+- GPU: NVIDIA GeForce RTX4090 GPU
+- Pytorch: 1.13.0 cuda 11.7
+- cudatoolkit: 11.7.1
+- scikit-learn: 1.0.2
+- albumentations: 1.2.0
+
+#### 2. Datasets
 
 Please put the [BUSI](https://www.kaggle.com/aryashah2k/breast-ultrasound-images-dataset) dataset or your own dataset as the following architecture. 
 ```
-└── MobileUtr
+└── Mobile-U-ViT
     ├── data
         ├── busi
             ├── images
@@ -45,15 +104,7 @@ Please put the [BUSI](https://www.kaggle.com/aryashah2k/breast-ultrasound-images
     ├── main.py
     └── split.py
 ```
-## Environment
-
-- GPU: NVIDIA GeForce RTX4090 GPU
-- Pytorch: 1.13.0 cuda 11.7
-- cudatoolkit: 11.7.1
-- scikit-learn: 1.0.2
-- albumentations: 1.2.0
-
-## Training and Validation
+#### 3. Training & Validation
 
 You can first split your dataset:
 
@@ -66,3 +117,21 @@ Then, train and validate:
 ```python
 python main.py --model ["mobileuvit", "mobileuvit_l"] --base_dir ./data/busi --train_file_dir busi_train.txt --val_file_dir busi_val.txt
 ```
+
+![Teaser](imgs/result.jpg)
+
+### Acknowledgements:
+
+This code uses helper functions from [CMUNeXt](https://github.com/FengheTan9/CMUNeXt).
+
+#### Citation
+
+If the code, paper and weights help your research, please cite:
+
+```
+
+```
+
+#### License
+
+This project is released under the Apache 2.0 license. Please see the [LICENSE](LICENSE) file for more information.
