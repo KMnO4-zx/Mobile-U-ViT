@@ -253,7 +253,7 @@ class conv_block(nn.Module):
         return x
 
 
-class MobileUVit(nn.Module):
+class MobileUViT(nn.Module):
     def __init__(self,
                  inch=3,
                  dims=[16, 32, 64, 128],
@@ -261,10 +261,10 @@ class MobileUVit(nn.Module):
                  kernels=[3, 3, 7],
                  embed_dim=256,
                  out_channel=1):
-        super(MobileUVit, self).__init__()
+        super(MobileUViT, self).__init__()
         self.patch_embeddings = Embeddings(inch=inch, dims=dims, depths=depths, kernels=kernels)
 
-        self.adaptive_lgl_bottleneck = nn.ModuleList([
+        self.lklgl_bottleneck = nn.ModuleList([
             LGLBlock(
                 dim=dims[2], num_heads=embed_dim // 64, mlp_ratio=4., qkv_bias=True, qk_scale=None,
                 drop=0., attn_drop=0., drop_path=0.1, norm_layer=partial(nn.LayerNorm, eps=1e-6), sr_ratio=2)
@@ -295,7 +295,7 @@ class MobileUVit(nn.Module):
         x, skip = self.patch_embeddings(x)
         x = self.down(x)
 
-        for blk in self.adaptive_lgl_bottleneck:
+        for blk in self.lklgl_bottleneck:
             x = blk(x)
         x = self.expend_dims(x)
 
@@ -314,8 +314,8 @@ class MobileUVit(nn.Module):
 
 
 def mobileuvit(inch=3, dims=[16, 32, 64, 128], depths=[1, 1, 3, 3, 3], kernels=[3, 3, 7], embed_dim=256, out_channel=1):
-    return MobileUVit(inch=inch, dims=dims, depths=depths, kernels=kernels, embed_dim=embed_dim, out_channel=out_channel)
+    return MobileUViT(inch=inch, dims=dims, depths=depths, kernels=kernels, embed_dim=embed_dim, out_channel=out_channel)
 
 
 def mobileuvit_l(inch=3, dims=[32, 64, 128, 256], depths=[1, 1, 3, 3, 4], kernels=[3, 3, 7], embed_dim=512, out_channel=1):
-    return MobileUVit(inch=inch, dims=dims, depths=depths, kernels=kernels, embed_dim=embed_dim, out_channel=out_channel)
+    return MobileUViT(inch=inch, dims=dims, depths=depths, kernels=kernels, embed_dim=embed_dim, out_channel=out_channel)
