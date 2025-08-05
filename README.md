@@ -43,14 +43,14 @@
 </div>
 <br>
 
-   [![arXiv](https://img.shields.io/badge/arxiv-2408.08070-b31b1b)](https://arxiv.org/pdf/2408.08070.pdf)   [![github](https://img.shields.io/badge/github-MobileUViT-black)](https://github.com/FengheTan9/Mobile-U-ViT)    <a href="#LICENSE--citation"><img alt="License: Apache2.0" src="https://img.shields.io/badge/LICENSE-Apache%202.0-blue.svg"/></a>
+   [![arXiv](https://img.shields.io/badge/arxiv-2508.01064-b31b1b)](https://arxiv.org/pdf/2508.01064.pdf)   [![github](https://img.shields.io/badge/github-MobileUViT-black)](https://github.com/FengheTan9/Mobile-U-ViT)    <a href="####License"><img alt="License: Apache2.0" src="https://img.shields.io/badge/LICENSE-Apache%202.0-blue.svg"/></a>
 
 
 
 ## News
 
 - **Mobile U-ViT accepted by ACM MM'25 🥰** 
-- **Code and code released !** 😘
+- **Code and code released !** 😎
 
 ### Abstract
 
@@ -131,7 +131,12 @@ This code uses helper functions from [CMUNeXt](https://github.com/FengheTan9/CMU
 If the code, paper and weights help your research, please cite:
 
 ```
-
+@article{llm4seg,
+  title={Pre-Trained LLM is a Semantic-Aware and Generalizable Segmentation Booster},
+  author={Tang, Fenghe and Nian, Bingkun and Ding, Jianrui and Ma, Wenxin and Quan, Quan and Yang, Jie and Liu, Wei and Zhou, S Kevin},
+  journal={arXiv preprint arXiv:2508.01064},
+  year={2025}
+}
 ```
 
 #### License
