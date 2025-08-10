@@ -21,9 +21,9 @@
     <span class="author-block">
     <a href="https://scholar.google.com/citations?user=tmx7tu8AAAAJ&hl=en" target="_blank">Jie Yang</a><sup>3</sup>,</span>
     <span class="author-block">
-    <a href="https://scholar.google.com/citations?user=Vbb5EGIAAAAJ&hl=en" target="_blank"> Liu Wei</a><sup>3</sup>,</span>
+    <a href="https://scholar.google.com/citations?user=Vbb5EGIAAAAJ&hl=en" target="_blank">Wei Liu</a><sup>3</sup>,</span>
     <span class="author-block">
-    <a href="https://scholar.google.com/citations?user=8eNm2GMAAAAJ&hl=en" target="_blank">S.Kevin Zhou</a><sup>1,2</sup>
+    <a href="https://scholar.google.com/citations?user=8eNm2GMAAAAJ&hl=en" target="_blank">S. Kevin Zhou</a><sup>1,2</sup>
     </span>
 </div>
 <br>
