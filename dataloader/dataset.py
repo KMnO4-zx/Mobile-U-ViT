@@ -39,7 +39,11 @@ class MedicalDataSets(Dataset):
         case = self.sample_list[idx]
 
         image = cv2.imread(os.path.join(self._base_dir, 'images', case + '.png'))
-        label = cv2.imread(os.path.join(self._base_dir, 'masks', '0', case + '.png'), cv2.IMREAD_GRAYSCALE)[..., None]
+        mask_name = case + '_mask.png' if 'mask' not in case else case + '.png'
+        label = cv2.imread(os.path.join(self._base_dir, 'masks', '0', mask_name), cv2.IMREAD_GRAYSCALE)
+        if label is None:
+            raise FileNotFoundError(f"Mask file not found: {os.path.join(self._base_dir, 'masks', '0', mask_name)}")
+        label = label[..., None]
 
         augmented = self.transform(image=image, mask=label)
         image = augmented['image']

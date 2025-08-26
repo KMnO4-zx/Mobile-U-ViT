@@ -7,9 +7,8 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 from dataloader.dataset import MedicalDataSets
-from albumentations.augmentations import transforms
+import albumentations as A
 from albumentations.core.composition import Compose
-from albumentations import RandomRotate90, Resize
 
 from utils.util import AverageMeter
 import utils.losses as losses
@@ -48,15 +47,15 @@ args = parser.parse_args()
 def getDataloader():
     img_size = 256
     train_transform = Compose([
-        RandomRotate90(),
-        transforms.Flip(),
-        Resize(img_size, img_size),
-        transforms.Normalize(),
+        A.RandomRotate90(),
+        A.HorizontalFlip(),
+        A.Resize(img_size, img_size),
+        A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
 
     val_transform = Compose([
-        Resize(img_size, img_size),
-        transforms.Normalize(),
+        A.Resize(img_size, img_size),
+        A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     db_train = MedicalDataSets(base_dir=args.base_dir, split="train", transform=train_transform,
                                train_file_dir=args.train_file_dir, val_file_dir=args.val_file_dir)
@@ -79,7 +78,16 @@ def get_model(args):
     else:
         model = None
         print("model err")
-    return model.cuda()
+    
+    if torch.cuda.is_available():
+        device = torch.device('cuda')
+    elif torch.backends.mps.is_available():
+        device = torch.device('mps')
+    else:
+        device = torch.device('cpu')
+    
+    print(f"Using device: {device}")
+    return model.to(device)
 
 
 def train(args):
@@ -88,7 +96,10 @@ def train(args):
     model = get_model(args)
     print("train file dir:{} val file dir:{}".format(args.train_file_dir, args.val_file_dir))
     optimizer = optim.SGD(model.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001)
-    criterion = losses.__dict__['BCEDiceLoss']().cuda()
+    
+    # Get device from model
+    device = next(model.parameters()).device
+    criterion = losses.__dict__['BCEDiceLoss']().to(device)
     print("{} iterations per epoch".format(len(trainloader)))
     best_iou = 0
     iter_num = 0
@@ -108,7 +119,7 @@ def train(args):
         for i_batch, sampled_batch in enumerate(trainloader):
 
             volume_batch, label_batch = sampled_batch['image'], sampled_batch['label']
-            volume_batch, label_batch = volume_batch.cuda(), label_batch.cuda()
+            volume_batch, label_batch = volume_batch.to(device), label_batch.to(device)
 
             outputs = model(volume_batch)
             
@@ -130,8 +141,8 @@ def train(args):
         with torch.no_grad():
             for i_batch, sampled_batch in enumerate(valloader):
                 input, target = sampled_batch['image'], sampled_batch['label']
-                input = input.cuda()
-                target = target.cuda()
+                input = input.to(device)
+                target = target.to(device)
                 output = model(input)
                 loss = criterion(output, target)
                 

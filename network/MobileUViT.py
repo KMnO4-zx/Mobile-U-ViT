@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from functools import partial
-from timm.models.layers import DropPath
+from timm.layers import DropPath
 
 
 class Residual(nn.Module):
